@@ -1,3 +1,135 @@
-<mat-toolbar color="primary">
-  <span>LP</span>
+<!-- Updated -->
+
+<mat-toolbar class="flex justify-center">
+  <span class="text-center">User Details</span>
+  <span class="example-spacer"></span>
 </mat-toolbar>
+
+<div class="flex items-center justify-center bg-gray-600">
+  <div
+    class="flex flex-col space-y-4 p-4 bg-gray-500 shadow-lg w-full max-w-[50%]"
+  >
+    <mat-form-field class="w-full" appearance="fill" color="primary">
+      <mat-label class="text-gray-900">User Name</mat-label>
+      <input matInput placeholder="User Name" required class="text-gray-900" />
+    </mat-form-field>
+
+    <mat-form-field class="w-full" appearance="fill" color="accent">
+      <mat-label class="text-gray-900">Workout Type</mat-label>
+      <mat-select required class="text-gray-900">
+        <mat-option value="Cycling">Cycling</mat-option>
+        <mat-option value="Running">Running</mat-option>
+        <mat-option value="Swimming">Swimming</mat-option>
+        <mat-option value="Yoga">Yoga</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-full" appearance="fill" color="warn">
+      <mat-label class="text-gray-900">Workout Minutes</mat-label>
+      <input
+        matInput
+        type="number"
+        placeholder="Workout Minutes"
+        required
+        class="text-gray-900"
+      />
+    </mat-form-field>
+
+    <button mat-raised-button (click)="addWorkout()">Add Workout</button>
+  </div>
+</div>
+
+<mat-toolbar class="flex justify-center">
+  <span class="mat-toolbar-spacer"></span>
+  <span>User WorkList</span>
+  <span class="mat-toolbar-spacer"></span>
+</mat-toolbar>
+<div class="flex items-center justify-center bg-gray-600">
+  <div
+    class="flex flex-col space-y-4 p-4 bg-gray-500 shadow-lg w-full max-w-[50%]"
+  >
+    <div class="flex justify-around">
+      <div class="mb-4 w-full max-w-[49%]">
+        <input
+          type="text"
+          placeholder="Search"
+          class="p-2 border border-gray-300 rounded w-full"
+        />
+      </div>
+      <div class="mb-4 w-full max-w-[49%]">
+        <select class="p-2 border border-gray-300 rounded w-full">
+          <option value="All">Filter</option>
+          <option value="Running">Running</option>
+          <option value="Cycling">Cycling</option>
+          <option value="Swimming">Swimming</option>
+          <option value="Yoga">Yoga</option>
+        </select>
+      </div>
+    </div>
+    <table class="min-w-full bg-white rounded-lg border-gray-200">
+      <thead>
+        <tr>
+          <th class="py-2 px-4 border-b">Name</th>
+          <th class="py-2 px-4 border-b">Workouts</th>
+          <th class="py-2 px-4 border-b">Number of Workouts</th>
+          <th class="py-2 px-4 border-b">Total Workout Minutes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let workout of paginatedWorkouts">
+          <td class="py-2 px-4 border-b text-center">{{ workout.name }}</td>
+          <td class="py-2 px-4 border-b text-center">{{ workout.workouts }}</td>
+          <td class="py-2 px-4 border-b text-center">
+            {{ workout.numberOfWorkouts }}
+          </td>
+          <td class="py-2 px-4 border-b text-center">
+            {{ workout.totalWorkoutMinutes }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="flex justify-around items-center mt-4">
+      <button
+        class="flex px-4 py-2 w-full max-w-[23%] justify-center bg-gray-200 rounded"
+        (click)="prevPage()"
+      >
+        « Previous
+      </button>
+      <div>Page {{ currentPage }}</div>
+      <button
+        class="flex px-4 py-2 w-full max-w-[23%] justify-center bg-gray-200 rounded"
+        (click)="nextPage()"
+      >
+        Next »
+      </button>
+    </div>
+  </div>
+</div>
+
+<mat-toolbar class="flex justify-center">
+  <span class="flex justify-center">Optional Feature</span>
+  <span class="example-spacer"></span>
+</mat-toolbar>
+
+<div class="flex items-center justify-center bg-gray-600">
+  <div class="flex w-full max-w-4xl space-x-4 p-4 bg-gray-500 shadow-lg">
+    <div class="w-1/4">
+      <ul>
+        <li
+          *ngFor="let workout of workouts"
+          (click)="selectWorkout(workout)"
+          [class.bg-gray-300]="selectedWorkout === workout"
+          class="p-2 cursor-pointer border-b border-gray-300"
+        >
+          {{ workout.name }}
+        </li>
+      </ul>
+    </div>
+    <div class="w-3/4 p-4 flex flex-col items-center">
+      <h2 class="text-xl font-bold mb-4">
+        {{ selectedWorkout.name }}'s workout progress
+      </h2>
+      <canvas baseChart>{{ chartData }} </canvas>
+    </div>
+  </div>
+</div>
